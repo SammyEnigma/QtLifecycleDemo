@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files\lifecycle">
+      <UniqueIdentifier>{c21aacbe-7f0b-43d2-9628-25f5024ed012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lifecycle">
+      <UniqueIdentifier>{daa70253-1768-4c58-8383-9f1cae1aa380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\page">
+      <UniqueIdentifier>{2ffcdee6-cfac-432f-aafd-45b83a987476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\page">
+      <UniqueIdentifier>{76998ca3-e438-4ddf-84b2-10e61554a5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\page\v">
+      <UniqueIdentifier>{5792659d-9220-4908-8774-6b7cefaf7a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\page\v">
+      <UniqueIdentifier>{a3037552-0af7-4830-8eb3-09142fd90da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\page\vm">
+      <UniqueIdentifier>{64a7d1ae-63bf-4c74-afae-d0b440ee7802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\page\vvm">
+      <UniqueIdentifier>{70411349-8cd7-4726-aa23-5d26ead40257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\page\vm">
+      <UniqueIdentifier>{cf18b2f4-511a-4d65-9ea2-604932f52fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\page\vvm">
+      <UniqueIdentifier>{4e12465b-a4f1-4213-bda1-81012ca97602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\livedata">
+      <UniqueIdentifier>{2279941d-de3a-40fa-8d87-b9c924246921}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="QtLifecycle.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtMoc Include="QtLifecycle.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="QtLifecycle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lifecycle\FragmentManager.cpp">
+      <Filter>Source Files\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vm\SubPageVm.cpp">
+      <Filter>Source Files\page\vm</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vm\SubPage2Vm.cpp">
+      <Filter>Source Files\page\vm</Filter>
+    </ClCompile>
+    <ClCompile Include="page\v\SubPage.cpp">
+      <Filter>Source Files\page\v</Filter>
+    </ClCompile>
+    <ClCompile Include="page\v\SubPage2.cpp">
+      <Filter>Source Files\page\v</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vvm\SubPageVVm.cpp">
+      <Filter>Source Files\page\vvm</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vvm\SubPageVVm_p.cpp">
+      <Filter>Source Files\page\vvm</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vvm\SubPage2VVm.cpp">
+      <Filter>Source Files\page\vvm</Filter>
+    </ClCompile>
+    <ClCompile Include="page\vvm\SubPage2VVm_p.cpp">
+      <Filter>Source Files\page\vvm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lifecycle\FragmentManager.h">
+      <Filter>Header Files\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="lifecycle\Impl.h">
+      <Filter>Header Files\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vm\SubPageVm.h">
+      <Filter>Header Files\page\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vm\SubPageVm_p.h">
+      <Filter>Header Files\page\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vm\SubPage2Vm.h">
+      <Filter>Header Files\page\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vm\SubPage2Vm_p.h">
+      <Filter>Header Files\page\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\v\SubPage.h">
+      <Filter>Header Files\page\v</Filter>
+    </ClInclude>
+    <ClInclude Include="page\v\SubPage2.h">
+      <Filter>Header Files\page\v</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vvm\SubPageVVm.h">
+      <Filter>Header Files\page\vvm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vvm\SubPageVVm_p.h">
+      <Filter>Header Files\page\vvm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vvm\SubPage2VVm.h">
+      <Filter>Header Files\page\vvm</Filter>
+    </ClInclude>
+    <ClInclude Include="page\vvm\SubPage2VVm_p.h">
+      <Filter>Header Files\page\vvm</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\CheckBoxNotify.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\ComboBoxNotify.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\DateTimeEditNotity.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\LineEditNotify.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\LiveDataDefaultConverter.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\ProgressbarNotify.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="livedata\RadioButtonNotify.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
+    <ClInclude Include="RunnableHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="QtLifecycle.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="page\SubForm.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="page\SubForm2.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="lifecycle\LifeCycleWidget.h">
+      <Filter>Header Files\lifecycle</Filter>
+    </QtMoc>
+    <QtMoc Include="livedata\LiveData.h">
+      <Filter>Header Files\livedata</Filter>
+    </QtMoc>
+  </ItemGroup>
+</Project>

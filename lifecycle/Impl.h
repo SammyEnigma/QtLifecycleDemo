@@ -1,0 +1,48 @@
+#pragma once
+
+#include <qwidget.h>
+
+struct ImplPrivate;
+
+class ImplClass : public QWidget {
+protected:
+    ImplClass(ImplPrivate& pd, QWidget* parent);
+
+protected:
+    QScopedPointer<ImplPrivate> d_ptr;
+};
+
+struct ImplPrivate : public QObject {
+    ImplClass* q_ptr;
+
+    virtual void init() {};
+    virtual void bindView(QWidget* parent) {};
+};
+
+inline ImplClass::ImplClass(ImplPrivate& pd, QWidget* parent)
+    : QWidget(parent)
+    , d_ptr(&pd)
+{
+    d_ptr->q_ptr = this;
+}
+
+template<typename Ui>
+struct BaseView {
+    Ui* ui;
+
+    Ui* operator()() {
+        return ui;
+    }
+
+    virtual void setupUi(QWidget* parent) = 0;
+
+    BaseView() {
+        ui = new Ui;
+    }
+};
+
+template<typename T>
+class ImplClassWrapper : public T, public ImplClass {
+protected:
+    using ImplClass::ImplClass;
+};
