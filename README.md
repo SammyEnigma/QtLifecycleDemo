@@ -6,7 +6,6 @@
 - 网络模型框架：（待实现）
 
 ## LifeCycleWidget
----
 LifeCycleWidget为配合fragmentmanager类使用的子页面基类，并且使用了pImpl模式，其中包含了6个生命周期函数，选择使用这些：
 - 创建时：(构造函数)
 - 第一次显示时：onViewLoad()
@@ -39,7 +38,6 @@ private:
 可以使用宏Q_DECLARE_PRIVATE来使用pImpl模式
 
 ## fragmentmanager
----
 fragmentmanager是子页面页面栈管理的一个简单类，用于管理实现LifeCycleWidget的子页面，其中装载页面使用的容器为QStackedWidget，因此创建和注册页面使用以下方式：
 ```c++
 fragmentManager = new FragmentManager(ui.stackedWidget);
@@ -53,7 +51,6 @@ fragmentManager->registerPage<SubPage, SubPage2>();
 fragmentmanager跳转子页面是通过字符串方式创建对应子页面，接收子页面的跳转请求通过信号槽的机制
 
 ## livedata
----
 livedata用于变量-控件绑定工具类，对变量赋值view同时更新，用户对view设置值变量自动赋值，借助信号槽可以在子线程中修改变量在主线程中更新view，其中更新控件是使用控件propertyname属性方式进行赋值，因此需要指定属性，默认为"text"属性。通过加号运算符"+"绑定控件。
 - 绑定控件：
 ```c++
@@ -109,7 +106,6 @@ StrT s = data();
 ```
 
 AbstractModelHelpter
----
 AbstractModelHelpter用于自定义结构体与QTableView（或QListView）的数据绑定的工具类，未使用livedata，但能够方便的将自定义结构体与模型行绑定，具有以下工具函数：
 - reset：清空数据与视图
 - update：将视图编辑后的数据更新到自定义数据中
