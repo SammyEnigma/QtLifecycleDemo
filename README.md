@@ -105,7 +105,7 @@ data = s;
 StrT s = data();
 ```
 
-AbstractModelHelpter
+## AbstractModelHelpter
 AbstractModelHelpter用于自定义结构体与QTableView（或QListView）的数据绑定的工具类，未使用livedata，但能够方便的将自定义结构体与模型行绑定，具有以下工具函数：
 - reset：清空数据与视图
 - update：将视图编辑后的数据更新到自定义数据中
