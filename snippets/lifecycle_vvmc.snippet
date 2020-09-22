@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>lifecycle vvm cpp file</Title>
+			<Shortcut>lifecyclevvm</Shortcut>
+			<Description>lifecycle vvm模式主类实现文件</Description>
+			<Author>daonvshu</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>name</ID>
+					<ToolTip>类名</ToolTip>
+					<Default>MyClass</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="cpp"><![CDATA[$name$::$name$(QWidget* parent)
+					: LifeCycleWidget(*new $name$Private, parent)
+				{
+					Q_D($name$);
+					d->init();
+				}
+
+				$name$::~$name$() {
+				}
+
+				bool $name$::attempClose() {
+				    return true;
+				}
+
+				void $name$::onNavigateResult(const QVariant& data) {}
+
+				void $name$::onViewLoad() {}
+
+				void $name$::onReshow() {}
+
+				void $name$::onHidden() {}
+
+				void $name$::onResizeWindow() {}
+
+				void $name$Private::init() {
+					Q_Q($name$);
+					bindView(q);
+				}
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
