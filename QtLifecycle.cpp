@@ -25,6 +25,9 @@ QtLifecycle::QtLifecycle(QWidget *parent)
 
     fragmentManager = new FragmentManager(ui.stackedWidget);
     fragmentManager->registerPage<SubPageVVm, SubPage2VVm>();
+    fragmentManager->setOnPageSetListener([&](const FragmentItem& item) {
+        qDebug() << "set new item->" << item.itemName;
+    });
 }
 
 

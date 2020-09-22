@@ -5,6 +5,7 @@
 FragmentManager::FragmentManager(QStackedWidget* container)
     : QObject(container)
     , container(container)
+    , onNewPageSetEvent(nullptr)
 {
 }
 
@@ -83,6 +84,9 @@ void FragmentManager::fragmentCreated(const FragmentItem& item) {
     container->addWidget(item.widget);
     container->setCurrentWidget(item.widget);
     fragmentsStack.append(item);
+    if (onNewPageSetEvent != nullptr) {
+        onNewPageSetEvent(item);
+    }
 
     connect(item.widget, &LifeCycleWidgetWrapper::navigateTo, [&] (QString name, QVariant data) {
         navigateTo(name, data);

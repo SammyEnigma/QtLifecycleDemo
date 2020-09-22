@@ -28,6 +28,14 @@ public:
 
     void printFragmentStack();
 
+    void setOnPageSetListener(std::function<void(const FragmentItem&)> callback) {
+        onNewPageSetEvent = callback;
+    }
+
+    const FragmentItem& getCurrentPage() const {
+        return fragmentsStack.last();
+    }
+
     template<typename... T>
     void registerPage() {
         RgHelper<T...>::registerPage(this);
@@ -72,5 +80,7 @@ private:
     QList<FragmentItem> fragmentsStack;
 
     QStackedWidget* container;
+
+    std::function<void(const FragmentItem&)> onNewPageSetEvent;
 };
 
