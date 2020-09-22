@@ -81,12 +81,12 @@ void FragmentManager::printFragmentStack() {
 }
 
 void FragmentManager::fragmentCreated(const FragmentItem& item) {
-    container->addWidget(item.widget);
-    container->setCurrentWidget(item.widget);
     fragmentsStack.append(item);
     if (onNewPageSetEvent != nullptr) {
         onNewPageSetEvent(item);
     }
+    container->addWidget(item.widget);
+    container->setCurrentWidget(item.widget);
 
     connect(item.widget, &LifeCycleWidgetWrapper::navigateTo, [&] (QString name, QVariant data) {
         navigateTo(name, data);
