@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>lifecycle vvm view file</Title>
+			<Shortcut>lifecyclevvm</Shortcut>
+			<Description>lifecycle vvm模式view实现文件</Description>
+			<Author>daonvshu</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>name</ID>
+					<ToolTip>类名</ToolTip>
+					<Default>MyClass</Default>
+				</Literal>
+				<Literal>
+					<ID>uiclass</ID>
+					<ToolTip>Ui类名</ToolTip>
+					<Default>UiClass</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="cpp"><![CDATA[struct $name$View : public BaseView<Ui::$uiclass$> {
+
+					void setupUi(QWidget* parent) override {
+						ui->setupUi(parent);
+						//do other view init..
+					}
+				};
+
+				void $name$Private::bindView(QWidget* parent) {
+					view = new $name$View;
+					view->setupUi(parent);
+				}
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

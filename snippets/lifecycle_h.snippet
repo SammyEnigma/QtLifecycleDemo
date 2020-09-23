@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>lifecycle header file</Title>
+			<Shortcut>lifecycle</Shortcut>
+			<Description>lifecycle主类头文件</Description>
+			<Author>daonvshu</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>lifecyclepath</ID>
+					<ToolTip>lifecycle头文件位置</ToolTip>
+					<Default>LifeCycleWidget.h</Default>
+				</Literal>
+				<Literal>
+					<ID>name</ID>
+					<ToolTip>类名</ToolTip>
+					<Default>MyClass</Default>
+				</Literal>
+				<Literal>
+					<ID>uiclass</ID>
+					<ToolTip>Ui类名</ToolTip>
+					<Default>UiClass</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="cpp"><![CDATA[namespace Ui {
+					class $uiclass$;
+				};
+
+				const char name_$name$[] = "$name$";
+				class $name$ : public LifeCycleWidget<Mode_Standard, name_$name$> {
+				public:
+					$name$(QWidget* parent);
+					~$name$();
+
+					bool attempClose();
+
+				protected:
+					void onNavigateResult(const QVariant& data);
+					void onViewLoad();
+					void onReshow();
+					void onHidden();
+					void onResizeWindow();
+
+				private:
+					Ui::$uiclass$* ui;
+				};
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
