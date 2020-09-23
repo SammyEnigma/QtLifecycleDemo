@@ -63,6 +63,27 @@ public:
         return model->rowCount() - 1;
     }
 
+    T takeRow(int index) {
+        model->removeRow(index);
+        return data.takeAt(index);
+    }
+
+    T takeLast() {
+        return takeRow(model->rowCount() - 1);
+    }
+
+    T takeFirst() {
+        return takeRow(0);
+    }
+
+    int getRowCount() {
+        return model->rowCount();
+    }
+
+    const QList<T>& getData() {
+        return data;
+    }
+
     void update() {
         int rowSize = model->rowCount();
         int colSize = model->columnCount();
