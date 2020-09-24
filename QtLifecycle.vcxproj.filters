@@ -160,6 +160,9 @@
     <ClInclude Include="RunnableHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="livedata\AbstractModelHelper.h">
+      <Filter>Header Files\livedata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtLifecycle.ui">

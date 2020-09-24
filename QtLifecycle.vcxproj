@@ -106,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="lifecycle\FragmentManager.h" />
     <ClInclude Include="lifecycle\Impl.h" />
+    <ClInclude Include="livedata\AbstractModelHelper.h" />
     <ClInclude Include="livedata\CheckBoxNotify.h" />
     <ClInclude Include="livedata\ComboBoxNotify.h" />
     <ClInclude Include="livedata\DateTimeEditNotity.h" />

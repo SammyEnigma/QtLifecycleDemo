@@ -4,7 +4,7 @@
 
 #include "../../livedata/LiveData.h"
 
-#include <qtableview.h>
+#include "../../livedata/AbstractModelHelper.h"
 
 struct StrT {
     QString data;
@@ -44,5 +44,30 @@ struct SubPageVVmPrivate : public ImplPrivate {
     }
 };
 
+struct ItemData {
+    QString name;
+    QString phone;
+    int age;
+    bool male;
+};
 
+class ModelHelper : public AbstractModelHelpter<ItemData> {
+public:
+    ModelHelper(QAbstractItemView* view) : AbstractModelHelpter(view) {
+        getModelCaster()
+            .next<QString>(BIND_COL(name))
+            .next<QString>(BIND_COL(phone))
+            .next<int>(BIND_COL(age))
+            .next<bool>(BIND_COL(male))
+            ;
+    }
 
+protected:
+    QStringList getHeaders() override {
+        return QStringList() << u8"姓名" << u8"电话" << u8"年龄" << u8"男";
+    }
+
+    void onHeaderCreated(int colSize) override {
+        tbHHeader()->resizeSection(0, 120);
+    }
+};

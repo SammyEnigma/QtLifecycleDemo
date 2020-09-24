@@ -4,55 +4,6 @@
 #include <qevent.h>
 #include <qdebug.h>
 
-#include <qheaderview.h>
-
-#include "../../livedata/AbstractModelHelper.h"
-
-struct ItemData {
-    QString name;
-    QString phone;
-    int age;
-    bool male;
-};
-
-class ModelHelper : public AbstractModelHelpter<ItemData> {
-public:
-    using AbstractModelHelpter::AbstractModelHelpter;
-
-protected:
-    void data2View(const ItemData& data, int index, QStandardItem* item) override {
-        if (index == 0) {
-            item->setData(data.name, Qt::DisplayRole);
-        } else if (index == 1) {
-            item->setData(data.phone, Qt::DisplayRole);
-        } else if (index == 2) {
-            item->setData(data.age, Qt::DisplayRole);
-        } else {
-            item->setData(data.male, Qt::DisplayRole);
-        }
-    }
-
-    void view2Data(ItemData& data, int index, const QStandardItem* item) override {
-        if (index == 0) {
-            data.name = item->data(Qt::DisplayRole).toString();
-        } else if (index == 1) {
-            data.phone = item->data(Qt::DisplayRole).toString();
-        } else if (index == 2) {
-            data.age = item->data(Qt::DisplayRole).toInt();
-        } else {
-            data.male = item->data(Qt::DisplayRole).toBool();
-        }
-    }
-
-    QStringList getHeaders() override {
-        return QStringList() << u8"姓名" << u8"电话" << u8"年龄" << u8"男";
-    }
-
-    void onHeaderCreated(int colSize) override {
-        static_cast<QTableView*>(view)->horizontalHeader()->resizeSection(0, 120);
-    }
-};
-
 SubPageVVm::SubPageVVm(QWidget* parent)
     : LifeCycleWidget(*new SubPageVVmPrivate, parent) {
     Q_D(SubPageVVm);
