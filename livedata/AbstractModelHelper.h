@@ -5,6 +5,9 @@
 #include <qabstractitemview.h>
 #include <functional>
 
+#include <qtableview.h>
+#include <qheaderview.h>
+
 template<typename T>
 class AbstractModelHelpter;
 
@@ -34,6 +37,46 @@ private:
     }
 };
 
+#define BIND_COL(member) [](auto& data) -> auto& { return data.member; }
+
+template<typename T>
+class ModelCaster {
+public:
+    template<typename E>
+    ModelCaster& next(E&(*ptr)(T&), Qt::ItemDataRole role = Qt::DisplayRole, bool editable = true) {
+        setters << [=](T& data, QStandardItem* item) {
+            if (ptr != nullptr) {
+                item->setData(ptr(data), role);
+            }
+            item->setEditable(editable);
+        };
+
+        getters << [=](T& data, const QStandardItem* item) {
+            if (ptr != nullptr) {
+                ptr(data) = item->data(role).value<E>();
+            }
+        };
+
+        return *this;
+    }
+
+    ModelCaster& next(bool editable = true) {
+        setters << [=](T& data, QStandardItem* item) {
+            item->setEditable(editable);
+        };
+
+        getters << [=](T& data, const QStandardItem* item) {};
+
+        return *this;
+    }
+
+    friend class AbstractModelHelpter<T>;
+
+private:
+    QList<std::function<void(T&, QStandardItem*)>> setters;
+    QList<std::function<void(T&, const QStandardItem*)>> getters;
+};
+
 template<typename T>
 class AbstractModelHelpter : QObject {
 public:
@@ -50,13 +93,13 @@ public:
         createHeader(getHeaders());
     }
 
-    int append(const T& d) {
+    int append(T& d) {
         data.append(d);
         int colSize = model->columnCount();
         QList<QStandardItem*> items;
         for (int i = 0; i < colSize; i++) {
             auto item = new QStandardItem;
-            data2View(d, i, item);
+            modelCaster.setters.at(i)(d, item);
             items << item;
         }
         model->appendRow(items);
@@ -89,7 +132,7 @@ public:
         int colSize = model->columnCount();
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < colSize; j++) {
-                view2Data(data[i], j, model->item(i, j));
+                modelCaster.getters.at(j)(data[i], model->item(i, j));
             }
         }
     }
@@ -117,20 +160,32 @@ private:
     void rowDataReseted(int rowIndex) {
         int colSize = model->columnCount();
         for (int j = 0; j < colSize; j++) {
-            data2View(data[rowIndex], j, model->item(rowIndex, j));
+            modelCaster.setters.at(j)(data[rowIndex], model->item(rowIndex, j));
         }
     }
 
 protected:
-    virtual void data2View(const T& data, int index, QStandardItem* item) = 0;
-    virtual void view2Data(T& data, int index, const QStandardItem* item) {}
-
     virtual QStringList getHeaders() = 0;
 
     virtual void onHeaderCreated(int colSize) {}
+
+    ModelCaster<T>& getModelCaster() {
+        return modelCaster;
+    }
+
+    QHeaderView* tbHHeader() {
+        return static_cast<QTableView*>(view)->horizontalHeader();
+    }
+
+    QHeaderView* tbVHeader() {
+        return static_cast<QTableView*>(view)->verticalHeader();
+    }
 
 protected:
     QList<T> data;
     QStandardItemModel* model;
     QAbstractItemView* view;
+
+    ModelCaster<T> modelCaster;
 };
+
