@@ -9,7 +9,7 @@
 #include <qheaderview.h>
 
 template<typename T>
-class AbstractModelHelpter;
+class AbstractModelHelper;
 
 template<typename T>
 class ItemDataEditor : QObject {
@@ -25,7 +25,7 @@ public:
         deleteLater();
     }
 
-    friend class AbstractModelHelpter<T>;
+    friend class AbstractModelHelper<T>;
 
 private:
     T* data;
@@ -70,7 +70,7 @@ public:
         return *this;
     }
 
-    friend class AbstractModelHelpter<T>;
+    friend class AbstractModelHelper<T>;
 
 private:
     QList<std::function<void(T&, QStandardItem*)>> setters;
@@ -78,9 +78,9 @@ private:
 };
 
 template<typename T>
-class AbstractModelHelpter : QObject {
+class AbstractModelHelper : QObject {
 public:
-    AbstractModelHelpter(QAbstractItemView* view)
+    AbstractModelHelper(QAbstractItemView* view)
         : QObject(view) 
         , model(new QStandardItemModel(this))
         , view(view)
