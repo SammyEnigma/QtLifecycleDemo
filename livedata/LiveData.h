@@ -24,6 +24,7 @@ class LiveData : LiveDataWrapper {
 public:
     LiveData() {
         propertyName = "text";
+        observerBlocking = false;
     }
 
     LiveData(const LiveData&) = delete;
@@ -67,20 +68,45 @@ public:
         dataChanged();
     }
 
+    void operator^=(const T& d) {
+        data = d;
+        observerBlocking = true;
+        dataChanged();
+        observerBlocking = false;
+    }
+
     const T& operator()() const {
         return data;
     }
 
     template<typename F>
     void observe(F fun) {
-        connect(this, &LiveDataWrapper::dataChanged, fun);
-        connect(this, &LiveDataWrapper::viewChanged, fun);
+        connect(this, &LiveDataWrapper::dataChanged, [=] {
+            if (!observerBlocking) {
+                fun();
+            }
+        });
+
+        connect(this, &LiveDataWrapper::viewChanged, [=] {
+            if (!observerBlocking) {
+                fun();
+            }
+        });
     }
 
     template<typename W, typename F>
     void observe(W* w, F fun) {
-        connect(this, &LiveDataWrapper::dataChanged, w, fun);
-        connect(this, &LiveDataWrapper::viewChanged, w, fun);
+        connect(this, &LiveDataWrapper::dataChanged, w, [=] {
+            if (!observerBlocking) {
+                fun();
+            }
+        });
+
+        connect(this, &LiveDataWrapper::viewChanged, w, [=] {
+            if (!observerBlocking) {
+                fun();
+            }
+        });
     }
 
     template<typename D>
@@ -89,8 +115,17 @@ public:
         viewChanged();
     }
 
+    void publishBlock() {
+        observerBlocking = true;
+    }
+
+    void publishUnBlock() {
+        observerBlocking = false;
+    }
+
 private:
     T data;
     QList<QWidget*> widgets;
     const char* propertyName;
+    bool observerBlocking;
 };
