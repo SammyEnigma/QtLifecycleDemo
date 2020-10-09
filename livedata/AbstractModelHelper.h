@@ -90,6 +90,7 @@ public:
 
     void reset() {
         model->clear();
+        data.clear();
         createHeader(getHeaders());
     }
 
@@ -141,6 +142,19 @@ public:
         return *new ItemDataEditor<T>(&data[rowIndex], [=] {
             rowDataReseted(rowIndex);
         });
+    }
+
+    QStandardItemModel* getModel() {
+        return model;
+    }
+
+    QAbstractItemView* getView() {
+        return view;
+    }
+
+    template<typename V>
+    V* getView() {
+        return dynamic_cast<V*>(view);
     }
 
 private:
