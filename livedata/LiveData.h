@@ -25,6 +25,7 @@ public:
     LiveData() {
         propertyName = "text";
         observerBlocking = false;
+        oldData = nullptr;
     }
 
     LiveData(const LiveData&) = delete;
@@ -64,11 +65,13 @@ public:
     }
 
     void operator=(const T& d) {
+        save2Old();
         data = d;
         dataChanged();
     }
 
     void operator^=(const T& d) {
+        save2Old();
         data = d;
         observerBlocking = true;
         dataChanged();
@@ -77,6 +80,10 @@ public:
 
     const T& operator()() const {
         return data;
+    }
+
+    const T& old() const {
+        return *oldData;
     }
 
     template<typename F>
@@ -111,6 +118,7 @@ public:
 
     template<typename D>
     void setData(const D& d) {
+        save2Old();
         viewDataConverter(data, d);
         viewChanged();
     }
@@ -123,9 +131,28 @@ public:
         observerBlocking = false;
     }
 
+    bool hasOld() {
+        return oldData != nullptr;
+    }
+
+    ~LiveData() {
+        if (oldData != nullptr) {
+            delete oldData;
+        }
+    }
+
 private:
     T data;
+    T* oldData;
     QList<QWidget*> widgets;
     const char* propertyName;
     bool observerBlocking;
+
+private:
+    void save2Old() {
+        if (oldData != nullptr) {
+            delete oldData;
+        }
+        oldData = new T(data);
+    }
 };

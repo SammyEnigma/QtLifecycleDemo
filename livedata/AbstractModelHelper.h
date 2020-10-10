@@ -138,6 +138,13 @@ public:
         }
     }
 
+    void update(int row) {
+        int colSize = model->columnCount();
+        for (int j = 0; j < colSize; j++) {
+            modelCaster.getters.at(j)(data[row], model->item(row, j));
+        }
+    }
+
     ItemDataEditor<T>& editRow(int rowIndex) {
         return *new ItemDataEditor<T>(&data[rowIndex], [=] {
             rowDataReseted(rowIndex);
