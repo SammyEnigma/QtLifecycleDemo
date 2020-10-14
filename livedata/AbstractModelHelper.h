@@ -46,7 +46,7 @@ public:
     ModelCaster& next(E&(*ptr)(T&), Qt::ItemDataRole role = Qt::DisplayRole, bool editable = true) {
         setters << [=](T& data, QStandardItem* item) {
             if (ptr != nullptr) {
-                item->setData(ptr(data), role);
+                item->setData(QVariant::fromValue(ptr(data)), role);
             }
             item->setEditable(editable);
         };
