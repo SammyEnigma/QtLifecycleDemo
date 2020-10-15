@@ -107,6 +107,18 @@ public:
         return model->rowCount() - 1;
     }
 
+    void prepend(T& d) {
+        data.prepend(d);
+        int colSize = model->columnCount();
+        QList<QStandardItem*> items;
+        for (int i = 0; i < colSize; i++) {
+            auto item = new QStandardItem;
+            modelCaster.setters.at(i)(d, item);
+            items << item;
+        }
+        model->insertRow(0, items);
+    }
+
     T takeRow(int index) {
         model->removeRow(index);
         return data.takeAt(index);
