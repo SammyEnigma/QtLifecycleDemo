@@ -85,6 +85,10 @@ public:
         , model(new QStandardItemModel(this))
         , view(view)
     {
+        attatchModel();
+    }
+
+    void attatchModel() {
         view->setModel(model);
     }
 
