@@ -12,7 +12,7 @@ signals:
 };
 
 template<typename T>
-static QVariant noconvt(const T& src) {
+static QVariant defaultconvt(const T& src) {
     return src;
 }
 
