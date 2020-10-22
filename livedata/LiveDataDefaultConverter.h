@@ -2,18 +2,8 @@
 
 #include "LiveData.h"
 
-template<>
-inline void viewDataConverter(QString& data, const QString& src) {
-    data = src;
-}
-
-template<>
-inline void viewDataConverter(int& data, const int& src) {
-    data = src;
-}
-
-template<>
-inline void viewDataConverter(qreal& data, const qreal& src) {
+template<typename T>
+inline void viewDataConverter(T& data, const T& src) {
     data = src;
 }
 
@@ -35,4 +25,14 @@ inline void viewDataConverter(qreal& data, const QString& src) {
 template<>
 inline void viewDataConverter(QString& data, const qreal& src) {
     data = QString::number(src);
+}
+
+template<>
+inline void viewDataConverter(bool& data, const int& src) {
+    data = (bool)src;
+}
+
+template<>
+inline void viewDataConverter(int& data, const bool& src) {
+    data = src ? 1 : 0;
 }

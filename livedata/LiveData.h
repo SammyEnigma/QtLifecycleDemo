@@ -135,6 +135,15 @@ public:
         return oldData != nullptr;
     }
 
+    const QList<QWidget*>& getWidgets() const {
+        return widgets;
+    }
+
+    template<typename W>
+    W* getWidget() {
+        return dynamic_cast<W*>(widgets[0]);
+    }
+
     ~LiveData() {
         if (oldData != nullptr) {
             delete oldData;
