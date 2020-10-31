@@ -51,6 +51,9 @@ void FragmentManager::navigateTo(QString pageName, QVariant data) {
 
 void FragmentManager::replaceTo(QString pageName, QVariant data) {
     if (!fragmentsStack.isEmpty()) {
+        if (fragmentsStack.last().itemName == pageName) {
+            return;
+        }
         if (!fragmentsStack.last().widget->attempClose()) {
             return;
         }
