@@ -42,8 +42,8 @@
 
 				void $name$::onResizeWindow() {}
 
-				void $name$View::setupUi(QWidget* parent) {
-					ui->setupUi(parent);
+				void $name$View::initUi(QWidget* parent) {
+					setupUi(parent);
 				}
 
 				void $name$Private::init() {
@@ -53,7 +53,7 @@
 
 				void $name$Private::bindView(QWidget* parent) {
 					Q_Q($name$);
-					view.setupUi(parent);
+					view.initUi(parent);
 				}
 				]]>
 			</Code>

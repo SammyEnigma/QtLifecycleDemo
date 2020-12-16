@@ -25,15 +25,15 @@
 			</Declarations>
 			<Code Language="cpp"><![CDATA[struct $name$View : public BaseView<Ui::$uiclass$> {
 
-					void setupUi(QWidget* parent) override {
-						ui->setupUi(parent);
+					void initUi(QWidget* parent) override {
+						setupUi(parent);
 						//do other view init..
 					}
 				};
 
 				void $name$Private::bindView(QWidget* parent) {
 					view = new $name$View;
-					view->setupUi(parent);
+					view->initUi(parent);
 				}
 				]]>
 			</Code>

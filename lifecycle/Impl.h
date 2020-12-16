@@ -27,18 +27,8 @@ inline ImplClass::ImplClass(ImplPrivate& pd, QWidget* parent)
 }
 
 template<typename Ui>
-struct BaseView {
-    Ui* ui;
-
-    Ui* operator()() {
-        return ui;
-    }
-
-    virtual void setupUi(QWidget* parent) = 0;
-
-    BaseView() {
-        ui = new Ui;
-    }
+struct BaseView : public Ui {
+    virtual void initUi(QWidget* parent) = 0;
 };
 
 template<typename T>
