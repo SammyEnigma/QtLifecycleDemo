@@ -12,6 +12,9 @@ template<typename T>
 class AbstractModelHelper;
 
 template<typename T>
+class DisplayModelHelper;
+
+template<typename T>
 class ItemDataEditor : QObject {
 public:
     ItemDataEditor() = delete;
@@ -43,7 +46,7 @@ template<typename T>
 class ModelCaster {
 public:
     template<typename E>
-    ModelCaster& next(E&(*ptr)(T&), Qt::ItemDataRole role = Qt::DisplayRole, bool editable = true) {
+    ModelCaster& next(E&(*ptr)(T&), Qt::ItemDataRole role = Qt::DisplayRole, bool editable = false) {
         setters << [=](T& data, QStandardItem* item) {
             if (ptr != nullptr) {
                 item->setData(QVariant::fromValue(ptr(data)), role);
@@ -60,7 +63,7 @@ public:
         return *this;
     }
 
-    ModelCaster& next(bool editable = true) {
+    ModelCaster& next(bool editable = false) {
         setters << [=](T& data, QStandardItem* item) {
             item->setEditable(editable);
         };
@@ -75,6 +78,32 @@ public:
 private:
     QList<std::function<void(T&, QStandardItem*)>> setters;
     QList<std::function<void(T&, const QStandardItem*)>> getters;
+};
+
+#define DISPLAY_COL(member) [](const auto& data) -> auto { return data.member; }
+
+template<typename T>
+class DisplayCaster {
+public:
+    template<typename E>
+    DisplayCaster& next(E(*ptr)(const T&), Qt::ItemDataRole role = Qt::DisplayRole) {
+        setters << [=](const T& data, QStandardItem* item) {
+            if (ptr != nullptr) {
+                item->setData(QVariant::fromValue(ptr(data)), role);
+            }
+        };
+        return *this;
+    }
+
+    DisplayCaster& next() {
+        setters << [=](const T& data, QStandardItem* item) {};
+        return *this;
+    }
+
+    friend class DisplayModelHelper<T>;
+
+private:
+    QList<std::function<void(const T&, QStandardItem*)>> setters;
 };
 
 template<typename T>
@@ -180,7 +209,7 @@ public:
         return dynamic_cast<V*>(view);
     }
 
-private:
+protected:
     void createHeader(const QStringList& headers) {
         if (!headers.isEmpty()) {
             model->setColumnCount(headers.size());
@@ -194,7 +223,7 @@ private:
         onHeaderCreated(model->columnCount());
     }
 
-    void rowDataReseted(int rowIndex) {
+    virtual void rowDataReseted(int rowIndex) {
         int colSize = model->columnCount();
         for (int j = 0; j < colSize; j++) {
             modelCaster.setters.at(j)(data[rowIndex], model->item(rowIndex, j));
@@ -226,3 +255,65 @@ protected:
     ModelCaster<T> modelCaster;
 };
 
+template<typename T>
+class DisplayModelHelper: AbstractModelHelper<T> {
+public:
+    using AbstractModelHelper::AbstractModelHelper;
+    using AbstractModelHelper::attatchModel;
+    using AbstractModelHelper::reset;
+
+    int append(const T& d) {
+        data.append(d);
+        int colSize = model->columnCount();
+        QList<QStandardItem*> items;
+        for (int i = 0; i < colSize; i++) {
+            auto item = new QStandardItem;
+            modelCaster.setters.at(i)(d, item);
+            items << item;
+        }
+        model->appendRow(items);
+        return model->rowCount() - 1;
+    }
+
+    void prepend(const T& d) {
+        data.prepend(d);
+        int colSize = model->columnCount();
+        QList<QStandardItem*> items;
+        for (int i = 0; i < colSize; i++) {
+            auto item = new QStandardItem;
+            modelCaster.setters.at(i)(d, item);
+            items << item;
+        }
+        model->insertRow(0, items);
+    }
+
+    using AbstractModelHelper::takeRow;
+    using AbstractModelHelper::takeFirst;
+    using AbstractModelHelper::takeLast;
+
+    using AbstractModelHelper::getRowCount;
+
+    using AbstractModelHelper::getData;
+    using AbstractModelHelper::editRow;
+
+    using AbstractModelHelper::getModel;
+    using AbstractModelHelper::getView;
+
+protected:
+    DisplayCaster<T>& getModelCaster() {
+        return modelCaster;
+    }
+
+    using AbstractModelHelper::tbHHeader;
+    using AbstractModelHelper::tbVHeader;
+
+    void rowDataReseted(int rowIndex) override {
+        int colSize = model->columnCount();
+        for (int j = 0; j < colSize; j++) {
+            modelCaster.setters.at(j)(data[rowIndex], model->item(rowIndex, j));
+        }
+    }
+
+protected:
+    DisplayCaster<T> modelCaster;
+};

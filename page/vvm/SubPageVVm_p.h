@@ -51,9 +51,9 @@ struct ItemData {
     bool male;
 };
 
-class ModelHelper : public AbstractModelHelpter<ItemData> {
+class ModelHelper : public AbstractModelHelper<ItemData> {
 public:
-    ModelHelper(QAbstractItemView* view) : AbstractModelHelpter(view) {
+    ModelHelper(QAbstractItemView* view) : AbstractModelHelper(view) {
         getModelCaster()
             .next<QString>(BIND_COL(name))
             .next<QString>(BIND_COL(phone))
