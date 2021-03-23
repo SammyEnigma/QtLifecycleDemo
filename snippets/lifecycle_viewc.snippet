@@ -35,6 +35,10 @@
 					view = new $name$View;
 					view->initUi(parent);
 				}
+
+				void $name$Private::~$name$Private() {
+					delete view;
+				}
 				]]>
 			</Code>
 		</Snippet>
