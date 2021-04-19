@@ -11,6 +11,8 @@ FragmentManager::FragmentManager(QStackedWidget* container)
 
 void FragmentManager::navigateTo(QString pageName, QVariant data) {
     Q_ASSERT_X(pageCreatorList.contains(pageName), "fragmentManager", "page not register!");
+
+    navigateToData = data;
     const auto& creator = pageCreatorList.value(pageName);
     LifeCycleWidgetWrapper* widget = nullptr;
     switch (creator.launchMode) {
@@ -88,6 +90,7 @@ void FragmentManager::fragmentCreated(const FragmentItem& item) {
     if (onNewPageSetEvent != nullptr) {
         onNewPageSetEvent(item);
     }
+    item.widget->setNavigateData(navigateToData);
     container->addWidget(item.widget);
     container->setCurrentWidget(item.widget);
 

@@ -80,6 +80,7 @@ private:
     QList<FragmentItem> fragmentsStack;
 
     QStackedWidget* container;
+    QVariant navigateToData;
 
     std::function<void(const FragmentItem&)> onNewPageSetEvent;
 };

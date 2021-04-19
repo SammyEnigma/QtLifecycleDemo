@@ -33,7 +33,7 @@ signals:
     void navigateBack(QVariant data = QVariant());
     void finish();
 
-private:
+protected:
     QVariant navigateData;
 };
 
